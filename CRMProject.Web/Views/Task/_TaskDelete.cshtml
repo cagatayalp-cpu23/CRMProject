@@ -1,0 +1,18 @@
+﻿@model CRMProject.ViewModels.Admin.TaskDeleteViewModel
+
+
+@using (Html.BeginForm("Delete", "Task", new { Area = String.Empty }, FormMethod.Post))
+{
+
+    @Html.HiddenFor(a => a.TaskId)
+  <label>Silmek istediğinize emin misiniz?</label>
+    <hr />
+    <div class="form-group form-group-sm row">
+        <div class="col-xs-12">
+            <button type="submit" class="btn btn-primary pull-right margin-left10"><span class="fa fa-check"></span>&nbsp;&nbsp;Kaydet</button>
+            <button class="btn btn-danger pull-right" type="button" data-dismiss="modal"><span class="fa fa-times"></span>&nbsp;&nbsp;İptal</button>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+}
+

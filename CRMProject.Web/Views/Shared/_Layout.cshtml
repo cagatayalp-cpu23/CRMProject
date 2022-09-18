@@ -1,0 +1,212 @@
+﻿@using CRMProject.Web.Controllers
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="/Scripts/Chart.js"></script>
+
+    <link href="~/Content/admin-lte/css/AdminLTE.min.css" rel="stylesheet" />
+    <!-- GOOGLE WEB FONT -->
+    <link href="https://fonts.googleapis.com/css?family=Work+Sans:400,500,600" rel="stylesheet">
+    <link href="~/Content/toastr.css" rel="stylesheet" />
+    <script src="~/Scripts/toastr.min.js"></script>
+
+    <!-- BASE CSS -->
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <!-- YOUR CUSTOM CSS -->
+    <!-- MODERNIZR MENU -->
+
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+
+</head>
+<body>
+
+    @Html.Partial("_Navbar")
+    <div class="container">
+        @RenderBody()
+
+    </div>
+
+
+    <script src="~/Scripts/fullcalendar.js"></script>
+    <script src="~/Scripts/fullcalendar.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/bootstrap-confirmation.js"></script>
+
+    <script src="~/Scripts/bootstrap-maxlength.min.js"></script>
+
+    <script>
+        $('#jobsTable').bind('DOMSubtreeModified',
+            function () {
+                calculatePercentage();
+            });
+        
+        function calculatePercentage() {
+            //var btns = $('#jobsTable').find('.statusButtonTd').find('a');
+            //var completedJobs = 0;
+            //for (var z = 0; z < btns.length; z++) {
+            //    if ($(btns[z]).data('status') === true)
+            //    {
+            //        completedJobs++;
+            //    }
+            //}
+            $.ajax({
+                url: "/Task/Percentage",
+                type: "GET"
+            }).done(function (result) {
+
+                $('#completionPercentage').text((result) + '%');
+                $('#completionPercentageDiv').css({ 'width': (result) + '%' });
+            });
+            //$('#completionPercentage').text('%' + parseFloat(100 * (completedJobs / btns.length)).toFixed(0) + ' tamamlandı');
+            //$('#completionPercentage').text(parseFloat(100 * (completedJobs / btns.length)).toFixed(0) + '%');
+            //$('#completionPercentageDiv').css({ 'width': parseFloat(100 * (completedJobs / btns.length)).toFixed(0) + '%' });
+
+
+        }
+
+    </script>
+
+    @*<script>
+            $('#uniqueId').on('onSuccess', function () {
+                calculatePercentage();
+            });$('#uniqueId2').on('onSuccess', function () {
+                calculatePercentage();
+            });
+        </script>*@
+    <script src="~/Scripts/custom.ajax.form.js"></script>
+    <script src="~/Scripts/custom.modal.form.js"></script>
+    <script src="~/Scripts/custom.ajax.pager.js"></script>
+    <script src="~/Scripts/toastr.js"></script>
+    <script src="~/Scripts/custom.modal.form.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/TweenMax.min.js"></script>
+    <script src="~/Scripts/site.js"></script>
+
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+    <script>
+        $(function () {
+            $('[data-toggle=confirmation]').confirmation({
+                rootSelector: '[data-toggle=confirmation]'
+            });
+        });
+    </script>
+
+    <script>
+
+        function deleteTask() {
+            var that = $(this);
+            var taskId = that.data('taskId');
+            var container = $('#taskListContainer');
+            //The overlay
+            var overlay = $("<div class='loader-wrapper'><div class='loadingOverlay'></div></div>"); //dönme işareti
+
+            container.append(overlay);
+            //  debugger;
+            $.ajax({
+                url: '/Task/Delete',
+                dataType: 'json',
+                type: "POST",
+                cache: false,
+                data: { taskId: taskId }
+            }).done(function (result) {
+                container.find(overlay).remove(); //dönme işareti
+                if (result.success) {
+                    var $tr = that.closest('tr.master-row');
+                    $tr.nextUntil('tr.master-row').empty().remove(); //rowu sil
+                    $tr.animateDelete(); //animasyonlu bir şekilde sil
+                    $.each(result.successMessages, //Foreach
+                        function (i, item) {
+                            toastr.success(item);
+                        });
+                    $.each(result.warningMessages,
+                        function (i, item) {
+                            toastr.warning(item);
+                        });
+                } else {
+                    $.each(result.errorMessages,
+                        function (i, item) {
+                            toastr.error(item);
+                        });
+                }
+            }).fail(function () {
+                container.find(overlay).remove();
+            });
+        };
+    </script>
+    <div>
+        <script>
+
+
+            function changeStatus(button) {
+
+                var btn = $(button);
+                var id = btn.attr("data-id");
+                if (id != null) {
+                    $.ajax({
+                        type: "GET",
+                        url: "/Task/ChangeStatus/" + id,
+                        success: function (data) {
+                            if (data.success) {
+
+                                if (btn.data('status') === true) {
+                                    btn.data('status', false);
+                                    btn.attr('class', "btn btn-danger btnsuccess");
+                                    btn.text("YAPILMADI");
+                                    calculatePercentage();
+
+                                } else {
+                                    btn.data('status', true);
+                                    btn.attr('class', "btn btn-success btnsuccess");
+                                    btn.text("YAPILDI");
+                                    calculatePercentage();
+                                }
+                            } else {
+                                console.error(data);    
+                                $.each(data.errorMessages,
+                                    function (i, item) {
+                                        toastr.error(item);
+                                    });
+                            }
+                            
+
+                        }
+
+                    });
+
+
+                }
+            }
+
+
+        </script>
+    </div>
+
+<script>
+    $(document).ready(function () {
+        $('#taskSearchSubmit').submit();
+        $('#userSearchSubmit').submit();
+        $("#userform").on('click',
+            '.username',
+            function () {
+                $.ajax({
+                    url: "/Task/TaskSelect",
+                    type: "GET"
+
+                });
+            });
+    });
+</script>
+
+
+
+    
+
+</body>

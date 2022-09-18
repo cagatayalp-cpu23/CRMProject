@@ -1,0 +1,19 @@
+﻿@model CRMProject.ViewModels.Admin.StepViewModel
+
+@using (Html.BeginCollectionItem("AddTask.Step"))
+{
+    <div class="step-row">
+        <div class="form-group">
+            @Html.HiddenFor(x => x.Id)
+            @Html.HiddenFor(x => x.taskId)
+            @Html.LabelFor(x => x.StepDetail)
+            @Html.TextBoxFor(x => x.StepDetail, new { @class = "form-control" })
+
+        </div>
+        <div id="adimsildiv">
+            <a class="btn btn-success adimsil" data-id="@Model.Id" onclick="$(this).closest('.step-row').remove()">Sil</a>
+        </div>
+        
+    </div>
+}
+

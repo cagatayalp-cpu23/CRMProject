@@ -1,0 +1,71 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = null;
+}
+
+@model List<CRMProject.ViewModels.Admin.TaskListViewModel>
+
+<!-- Main content -->
+
+<div class="box">
+
+    <div class="box-header">
+        <h3 class="box-title">Boş Problemler</h3>
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body no-padding">
+        <table class="table table-condensed">
+            <thead>
+
+                <tr>
+                    <th>Task</th>
+                    <th>Giren kullanıcının rolü </th>
+                    <th>Ekle</th>
+                    <th>Kaç Gün Kaldı?</th>
+                    @*<th>User</th>*@
+                </tr>
+            </thead>
+            <tbody id="taskList2">
+                @Html.DisplayFor(m => m)
+
+                @*@foreach (var item in Model)
+                    {
+                    <tr>
+                        @if (ViewBag.role == item.RoleName)
+                        {
+                            <td>@item.ProblemName</td>
+                            <td>
+                                <div class="progress progress-xs ">
+                                    <div class="progress-bar progress-bar-aqua" style="width: 50%"></div>
+                                </div>
+                            </td>
+                            <td><span class="badge bg-red">55%</span></td>
+                            <td>@item.RoleName</td>*@
+                @*<td>@item.UserName</td>*@
+                @**@
+                @*<td><a class="btn btn-danger" href="@Url.Action("Sil","Task",new { id = item.Id })">Sil</a></td>*@
+
+                @*}
+                    </tr>
+                    }*@
+            </tbody>
+        </table>
+    </div>
+
+    <!-- /.box-body -->
+</div>
+<a class="btn btn-default btn-sm"
+   data-modal-form="true"
+   data-modal-size="modal-lg"
+   data-modal-append="tbody#taskList2"
+   data-modal-title=" Boş görev ekle"
+   data-hook-beforeunload="true"
+   href="@Url.Action("AddTask", "Task", routeValues: new {Area =string.Empty})">
+    <i class="fa fa-plus"></i>Boş görev ekle
+</a>
+
+
+
+
+<!-- Button trigger modal -->

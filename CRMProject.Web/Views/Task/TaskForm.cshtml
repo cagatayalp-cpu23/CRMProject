@@ -1,0 +1,100 @@
+﻿@using CRMProject.ViewModels.Admin
+@model IPagedList<CRMProject.ViewModels.Admin.TaskListViewModel>
+
+@{
+    ViewBag.Title = "Index";
+    var searchQuery = ViewBag.Search ?? string.Empty;
+    var searchModel = (TaskSearchViewModel)ViewBag.searchModel;
+  }
+
+
+<!-- Main content -->
+<!-- /.box-header -->
+<table class="table table-condensed" id="jobsTable">
+  
+    
+    <thead>
+        <tr>
+
+            <th>Task</th>
+            @*<th>Progress</th>
+        <th>Percentage</th>*@
+            <th>Atayanın Rolü</th>
+            <th>User</th>
+            <th>Düzenle</th>
+            <th>Sil</th>
+            <th>Yapıldı mı?</th>
+            <th>Kaç Gün Kaldı?</th>
+            <th>
+                <a class="btn btn-default btn-sm deletes"
+                   data-modal-form="true"
+                   data-modal-size="modal-lg"
+                   data-modal-append="tbody#SelectTask"
+                   data-modal-title="  Ekle"
+                   data-hook-beforeunload="true"
+                   href="@Url.Action("OpenIndex2", "Task")">
+                    <i class="fa fa-plus k"></i>Boş Problemler
+                </a>
+            </th>
+            <th>Atayanın Adı</th>
+            <th>Atanan Kullanıcılardan Sonuncusunun Rolü</th>
+
+
+        </tr>
+    </thead>
+    <tbody id="taskList">
+
+    @Html.DisplayFor(m => m)
+
+
+
+    </tbody>
+
+</table>
+
+
+
+Yüzde Kaçı Bitirildi:
+<hr/>
+<td>
+    <div class="progress progress-xs progress-striped active">
+        <div class="progress-bar progress-bar-success" id="completionPercentageDiv" style="width:@ViewBag.Sum%"></div>
+    </div>
+     <span id="completionPercentage" class="badge bg-green">@ViewBag.Sum%</span> 
+</td>
+<hr/>
+
+@*@{ Html.RenderAction("TaskForm", "Task");}*@
+@*@{ Html.RenderAction("Yeni", "Task");}*@
+@*<a class="btn btn-primary" href="@Url.Action("Yeni","Task")">
+        Yeni Task Ekle
+    </a>*@
+@*@{ Html.RenderAction("Yeni", "Task");}*@
+@Html.Pager(Model.PageSize, Model.PageNumber, Model.TotalItemCount, new AjaxOptions { UpdateTargetId = "taskListContainer" }).Options(o => o
+    .Action("TaskForm")
+    .DisplayTemplate("BootstrapPagination")
+    .MaxNrOfPages(6)
+    .AlwaysAddFirstPageNumber().RouteValues(new RouteValueDictionary(searchModel)))
+
+@if (Model.Any())
+{
+    <div style="margin: 20px 0; float: left !important;">
+        @((Model.PageIndex * Model.PageSize) + 1)-@((Model.PageIndex * Model.PageSize) + Model.Count())/@Model.TotalItemCount
+    </div>
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

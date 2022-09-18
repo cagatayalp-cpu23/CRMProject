@@ -1,0 +1,36 @@
+﻿@using System.Threading.Tasks
+@using CRMProject.Data
+@using CRMProject.ViewModels.Admin
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            @*@{Html.RenderAction("IsSelected", "Task");}*@
+        </div>
+        <ul class="nav navbar-nav">
+
+            <li><a href="/Task">Task</a></li>
+            <li><a href="/Problem">Problem</a></li>
+           
+            <li><a href="/Calendar">Calendar</a></li>
+
+            @if (CurrentUser.Role == "Manager")
+            {
+                <li><a href="User">Users</a></li>
+            }
+            <li><a href="/Login">Çıkış Yap</a></li>
+
+
+
+
+            <li>
+                <a href="@Url.Action("TaskForm", "Task")">
+                    <div class="parent-icon">
+                        <i class='bx bx bx-cart'></i>
+                    </div>
+                </a>
+            </li>
+
+        </ul>
+    </div>
+</nav>
+

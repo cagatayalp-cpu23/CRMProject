@@ -1,0 +1,13 @@
+﻿@model CRMProject.ViewModels.Admin.TaskProblemIdSelectModel
+<div class="form-group form-group-sm col-xs-12 col-sm-12 col-md-12 col-lg-12 @Html.ModelStateFor(m => m.ProblemId)">
+    <div class="input-group input-group-sm">
+        <span class="input-group-addon as-label required">
+            <strong> @Html.DisplayNameFor(m => m.ProblemId)</strong>
+        </span>
+
+        @Html.DropDownListFor(a => a.ProblemId,
+            new SelectList((List<CRMProject.ViewModels.Admin.ProblemViewModel>)ViewData["Problems"], "Id", "Name"), new { @class = "form-control" })
+        
+    </div>
+    @Html.ValidationMessageFor(m => m.ProblemId, "", new { @class = "text-danger" })
+</div>

@@ -1,0 +1,122 @@
+﻿@model CRMProject.ViewModels.Admin.RegisterViewModel
+@{ Layout = null; }
+
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--favicon-->
+    <link href="/assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/assets/css/app.css" rel="stylesheet">
+    <link href="/assets/css/icons.css" rel="stylesheet">
+    <title>Kayıt Ol</title>
+</head>
+<body class="bg-login">
+    <!--wrapper-->
+    <div class="wrapper">
+        <header class="login-header shadow">
+            <nav class="navbar navbar-expand-lg navbar-light bg-white rounded fixed-top rounded-0 shadow-sm">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="#">
+                       
+                    </a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent1" aria-controls="navbarSupportedContent1" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent1">
+                       
+                    </div>
+                </div>
+            </nav>
+        </header>
+        <div class="d-flex align-items-center justify-content-center my-5">
+            <div class="container">
+                <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-2">
+                    <div class="col mx-auto">
+                        <div class="card mt-5">
+                            <div class="card-body">
+                                <div class="border p-4 rounded">
+                                    <div class="text-center">
+                                        <h3 class="">Kayıt Ol</h3>
+                                        <p>
+                                            Zaten hesabın var mı? <a>@Html.ActionLink("Giriş Yap", "Index", "Login") </a>
+                                        </p>
+                                    </div>
+                                    @*<div class="d-grid">
+                                            <a class="btn my-4 shadow-sm btn-white" href="javascript:;">
+                                                <span class="d-flex justify-content-center align-items-center">
+                                                    <img class="me-2" src="/assets/images/icons/search.svg" width="16" alt="Image Description">
+                                                    <span>Sign Up with Google</span>
+                                                </span>
+                                            </a> <a href="javascript:;" class="btn btn-facebook"><i class="bx bxl-facebook"></i>Sign Up with Facebook</a>
+                                        </div>
+                                        <div class="login-separater text-center mb-4">
+                                            <span>VEYA E-POSTA İLE KAYDOLUN</span>
+                                            <hr />
+                                        </div>*@
+                                    @using (Html.BeginForm("Register", "Login", FormMethod.Post))
+                                    {
+                        @ViewBag.successRegister
+                                        @ViewBag.errorRegister
+                                                        <div class="form-body">
+                                                           
+                                                                <div class="col-sm-12">
+                                                                    <div class="input-group">
+                                                                        @Html.TextBoxFor(m => m.Name, new { @class = "form-control", placeholder = "Ad", required = "required" })
+
+                                                                    </div>
+                                                                </div>
+                                                                <div style="margin-top: 12px" class="col-12">
+                                                                    <div class="input-group" id="show_hide_password">
+                                                                        @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Şifre", required = "required" }) <a href="javascript:;" class="input-group-text bg-transparent"><i class='bx bx-hide'></i></a>
+                                                                    </div>
+                                                                </div>
+                                                                <div style="margin-top: 15px" class="col-12">
+                                                                    <div class="d-grid">
+                                                                        <input type="submit" class="btn btn-primary" value="Kayıt Ol">
+                                                                    </div>
+                                                                </div>
+                                                           
+                                                        </div>}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--end row-->
+            </div>
+        </div>
+        <footer class="bg-white shadow-sm border-top p-2 text-center fixed-bottom">
+            
+        </footer>
+    </div>
+    <!--end wrapper-->
+    <!-- Bootstrap JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.1/js/bootstrap.bundle.min.js" integrity="sha512-trzlduO3EdG7Q0xK4+A+rPbcolVt37ftugUSOvrHhLR5Yw5rsfWXcpB3CPuEBcRBCHpc+j18xtQ6YrtVPKCdsg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!--plugins-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/simplebar/5.3.5/simplebar.min.js" integrity="sha512-PXNAvB6wWywrk43aV52x7sFuo+m/2cUJYGNGYe+frlHLVMd4vEMEAvHFg1b88wECIk7r/TOejo5xL63Uf/JmHg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/metisMenu/3.0.7/metisMenu.min.js" integrity="sha512-o36qZrjup13zLM13tqxvZTaXMXs+5i4TL5UWaDCsmbp5qUcijtdCFuW9a/3qnHGfWzFHBAln8ODjf7AnUNebVg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/perfect-scrollbar/1.5.2/perfect-scrollbar.js" integrity="sha512-+AmLdG22YpOMDa53m6Z8SFPAZy/rVoQ7D4Q4tdRbon7q5iwGiJhddbXYqKRt0UQj+8YlhSCj/whFH0FFXC+sUg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!--Password show & hide js -->
+    <script>$(document).ready(function () {
+            $("#show_hide_password a").on('click', function (event) {
+                event.preventDefault();
+                if ($('#show_hide_password input').attr("type") == "text") {
+                    $('#show_hide_password input').attr('type', 'password');
+                    $('#show_hide_password i').addClass("bx-hide");
+                    $('#show_hide_password i').removeClass("bx-show");
+                } else if ($('#show_hide_password input').attr("type") == "password") {
+                    $('#show_hide_password input').attr('type', 'text');
+                    $('#show_hide_password i').removeClass("bx-hide");
+                    $('#show_hide_password i').addClass("bx-show");
+                }
+            });
+        });</script>
+    <!--app JS-->
+    <script src="/assets/js/app.js"></script>
+</body>
+
+</html>

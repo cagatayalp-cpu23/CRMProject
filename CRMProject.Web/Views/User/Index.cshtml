@@ -1,0 +1,16 @@
+﻿@model CRMProject.ViewModels.Admin.UserSearchViewModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm("UserForm", "User", FormMethod.Post,new{data_target_container = "#userListContainer", data_ajax_form = "true",id="userSearchSubmit"}))
+{
+    @Html.TextBoxFor(x=>x.Name)
+    <button type="submit" class="btn btn-default size-18">Arama</button>
+    <label>SIRALA</label>
+    @Html.EnumDropDownListFor(m=>m.SortList,"Seçiniz",new {@class="form-control"})
+}
+<div id="userListContainer">
+
+</div>

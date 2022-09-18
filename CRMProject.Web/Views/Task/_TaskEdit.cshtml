@@ -1,0 +1,81 @@
+﻿@using CRMProject.ViewModels.Admin
+@model CRMProject.ViewModels.Admin.TaskEditViewModel
+
+
+@using (Html.BeginForm("Edit", "Task", new { Area = String.Empty }, FormMethod.Post))
+{
+
+    @Html.HiddenFor(a => a.TaskId)
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <div class="row">
+                @*@Html.EditorFor(m => m.RoleId)*@
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <div class="row">
+                @Html.EditorFor(m => m.ProblemId)
+            </div>
+            <div id="adimdivduzenle">
+                <button id="adimduzenle"data-id=@Model.TaskId>Adım Ekle</button>
+                @foreach (StepViewModel item in Model.Step)
+                {
+                    Html.RenderPartial("EditStepPartial", item);
+                }
+            </div>
+           
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <div class="row">
+                @*@Html.EditorFor(m => m.UserId)*@
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div class="form-group form-group-sm row">
+        <div class="col-xs-12">
+            <button type="submit" class="btn btn-primary pull-right margin-left10"><span class="fa fa-check"></span>&nbsp;&nbsp;Kaydet</button>
+            <button class="btn btn-danger pull-right" type="button" data-dismiss="modal"><span class="fa fa-times"></span>&nbsp;&nbsp;İptal</button>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+}
+
+<script>
+    $(document).ready(function() {
+        $("#adimdivduzenle").on("click",
+            "#adimduzenle",
+       
+            function () {
+                var id = $(this).attr("data-id");
+                $.ajax({
+                    type: 'GET',
+                    url: '/Task/EditStep?taskId='+ id,
+                   
+                    success: function(data) {
+                        $('#adimdivduzenle').append(data);
+
+                    }
+                });
+                return false;
+            });
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        $(".adimsil2").on("click",
+            function () {
+                var that = $(this);
+                var id = $(this).attr("data-id");
+                $.ajax({
+                    type: 'POST',
+                    url: '/Task/StepDelete',
+                    data: { id: id },
+                    success: function (data) {
+                         that.closest('.step-row').remove();
+                    }
+                });
+            }
+        );
+    });
+</script>

@@ -1,0 +1,13 @@
+﻿@model CRMProject.ViewModels.Admin.UserDeleteViewModel
+@using (Html.BeginForm("DeleteUser", "User", FormMethod.Post))
+{
+    @Html.HiddenFor(x=>x.Id)
+    <tr>
+        <td>Silmek istediğinize emin misiniz?</td>
+    </tr>
+    
+    <tr>
+      <td> <button type="submit">Kaydet</button></td>  
+    </tr>
+   
+ }       

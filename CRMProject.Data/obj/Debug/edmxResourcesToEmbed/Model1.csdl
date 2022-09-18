@@ -1,0 +1,272 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="CrmDbTestModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="CrmDbTestEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Personels" EntityType="CrmDbTestModel.Personels" />
+    <EntitySet Name="ProblemSet" EntityType="CrmDbTestModel.ProblemSet" />
+    <EntitySet Name="Step" EntityType="CrmDbTestModel.Step" />
+    <EntitySet Name="sysdiagrams" EntityType="CrmDbTestModel.sysdiagrams" />
+    <EntitySet Name="TaskSet" EntityType="CrmDbTestModel.TaskSet" />
+    <EntitySet Name="TaskUser" EntityType="CrmDbTestModel.TaskUser" />
+    <AssociationSet Name="FK_TaskSet_Personels1" Association="CrmDbTestModel.FK_TaskSet_Personels1">
+      <End Role="Personels" EntitySet="Personels" />
+      <End Role="TaskSet" EntitySet="TaskSet" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TaskSet_ProblemSet" Association="CrmDbTestModel.FK_TaskSet_ProblemSet">
+      <End Role="ProblemSet" EntitySet="ProblemSet" />
+      <End Role="TaskSet" EntitySet="TaskSet" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Step_TaskSet1" Association="CrmDbTestModel.FK_Step_TaskSet1">
+      <End Role="TaskSet" EntitySet="TaskSet" />
+      <End Role="Step" EntitySet="Step" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TaskUser_TaskSet" Association="CrmDbTestModel.FK_TaskUser_TaskSet">
+      <End Role="TaskSet" EntitySet="TaskSet" />
+      <End Role="TaskUser" EntitySet="TaskUser" />
+    </AssociationSet>
+    <EntitySet Name="UserRole" EntityType="CrmDbTestModel.UserRole" />
+    <EntitySet Name="Roles" EntityType="CrmDbTestModel.Roles" />
+    <AssociationSet Name="FK_TaskSet_Roles" Association="CrmDbTestModel.FK_TaskSet_Roles">
+      <End Role="Roles" EntitySet="Roles" />
+      <End Role="TaskSet" EntitySet="TaskSet" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserRole_Roles" Association="CrmDbTestModel.FK_UserRole_Roles">
+      <End Role="Roles" EntitySet="Roles" />
+      <End Role="UserRole" EntitySet="UserRole" />
+    </AssociationSet>
+    <EntitySet Name="Users" EntityType="CrmDbTestModel.Users" />
+    <AssociationSet Name="FK_Users_Roles" Association="CrmDbTestModel.FK_Users_Roles">
+      <End Role="Roles" EntitySet="Roles" />
+      <End Role="Users" EntitySet="Users" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Users_Roles1" Association="CrmDbTestModel.FK_Users_Roles1">
+      <End Role="Roles" EntitySet="Roles" />
+      <End Role="Users" EntitySet="Users" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TaskUser_Users" Association="CrmDbTestModel.FK_TaskUser_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="TaskUser" EntitySet="TaskUser" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserRole_Users" Association="CrmDbTestModel.FK_UserRole_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="UserRole" EntitySet="UserRole" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Personels">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="TaskSet" Relationship="CrmDbTestModel.FK_TaskSet_Personels1" FromRole="Personels" ToRole="TaskSet" />
+  </EntityType>
+  <EntityType Name="ProblemSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="TaskSet" Relationship="CrmDbTestModel.FK_TaskSet_ProblemSet" FromRole="ProblemSet" ToRole="TaskSet" />
+  </EntityType>
+  <EntityType Name="Step">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="StepDetail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="taskId" Type="Int32" />
+    <NavigationProperty Name="TaskSet" Relationship="CrmDbTestModel.FK_Step_TaskSet1" FromRole="Step" ToRole="TaskSet" />
+    <Property Name="IsDone" Type="Boolean" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="TaskSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProblemId" Type="Int32" />
+    <Property Name="PersonelId" Type="Int32" />
+    <Property Name="RoleId" Type="Int32" />
+    <Property Name="IsSelected" Type="Boolean" />
+    <Property Name="Deadline" Type="DateTime" Precision="3" />
+    <Property Name="AtayanKullanici" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Personels" Relationship="CrmDbTestModel.FK_TaskSet_Personels1" FromRole="TaskSet" ToRole="Personels" />
+    <NavigationProperty Name="ProblemSet" Relationship="CrmDbTestModel.FK_TaskSet_ProblemSet" FromRole="TaskSet" ToRole="ProblemSet" />
+    <NavigationProperty Name="Step" Relationship="CrmDbTestModel.FK_Step_TaskSet1" FromRole="TaskSet" ToRole="Step" />
+    <NavigationProperty Name="TaskUser" Relationship="CrmDbTestModel.FK_TaskUser_TaskSet" FromRole="TaskSet" ToRole="TaskUser" />
+    <Property Name="GirenKullaniciRolu" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Roles" Relationship="CrmDbTestModel.FK_TaskSet_Roles" FromRole="TaskSet" ToRole="Roles" />
+  </EntityType>
+  <EntityType Name="TaskUser">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="taskId" Type="Int32" Nullable="false" />
+    <Property Name="userId" Type="Int32" />
+    <NavigationProperty Name="TaskSet" Relationship="CrmDbTestModel.FK_TaskUser_TaskSet" FromRole="TaskUser" ToRole="TaskSet" />
+    <NavigationProperty Name="Users" Relationship="CrmDbTestModel.FK_TaskUser_Users" FromRole="TaskUser" ToRole="Users" />
+  </EntityType>
+  <Association Name="FK_TaskSet_Personels1">
+    <End Type="CrmDbTestModel.Personels" Role="Personels" Multiplicity="0..1" />
+    <End Type="CrmDbTestModel.TaskSet" Role="TaskSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Personels">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TaskSet">
+        <PropertyRef Name="PersonelId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TaskSet_ProblemSet">
+    <End Type="CrmDbTestModel.ProblemSet" Role="ProblemSet" Multiplicity="0..1" />
+    <End Type="CrmDbTestModel.TaskSet" Role="TaskSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProblemSet">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TaskSet">
+        <PropertyRef Name="ProblemId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Step_TaskSet1">
+    <End Type="CrmDbTestModel.TaskSet" Role="TaskSet" Multiplicity="0..1" />
+    <End Type="CrmDbTestModel.Step" Role="Step" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TaskSet">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Step">
+        <PropertyRef Name="taskId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TaskUser_TaskSet">
+    <End Type="CrmDbTestModel.TaskSet" Role="TaskSet" Multiplicity="1" />
+    <End Type="CrmDbTestModel.TaskUser" Role="TaskUser" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TaskSet">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TaskUser">
+        <PropertyRef Name="taskId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="UserRole">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="userId" Type="Int32" />
+    <Property Name="roleId" Type="Int32" />
+    <NavigationProperty Name="Roles" Relationship="CrmDbTestModel.FK_UserRole_Roles" FromRole="UserRole" ToRole="Roles" />
+    <NavigationProperty Name="Users" Relationship="CrmDbTestModel.FK_UserRole_Users" FromRole="UserRole" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="Roles">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Role" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="TaskSet" Relationship="CrmDbTestModel.FK_TaskSet_Roles" FromRole="Roles" ToRole="TaskSet" />
+    <NavigationProperty Name="UserRole" Relationship="CrmDbTestModel.FK_UserRole_Roles" FromRole="Roles" ToRole="UserRole" />
+    <NavigationProperty Name="Users" Relationship="CrmDbTestModel.FK_Users_Roles" FromRole="Roles" ToRole="Users" />
+    <NavigationProperty Name="Users1" Relationship="CrmDbTestModel.FK_Users_Roles1" FromRole="Roles" ToRole="Users" />
+  </EntityType>
+  <Association Name="FK_TaskSet_Roles">
+    <End Type="CrmDbTestModel.Roles" Role="Roles" Multiplicity="0..1" />
+    <End Type="CrmDbTestModel.TaskSet" Role="TaskSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Roles">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TaskSet">
+        <PropertyRef Name="RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserRole_Roles">
+    <End Type="CrmDbTestModel.Roles" Role="Roles" Multiplicity="0..1" />
+    <End Type="CrmDbTestModel.UserRole" Role="UserRole" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Roles">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="UserRole">
+        <PropertyRef Name="roleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="Password" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="RoleId" Type="Int32" />
+    <NavigationProperty Name="Roles" Relationship="CrmDbTestModel.FK_Users_Roles" FromRole="Users" ToRole="Roles" />
+    <NavigationProperty Name="Roles1" Relationship="CrmDbTestModel.FK_Users_Roles1" FromRole="Users" ToRole="Roles" />
+    <NavigationProperty Name="TaskUser" Relationship="CrmDbTestModel.FK_TaskUser_Users" FromRole="Users" ToRole="TaskUser" />
+    <NavigationProperty Name="UserRole" Relationship="CrmDbTestModel.FK_UserRole_Users" FromRole="Users" ToRole="UserRole" />
+  </EntityType>
+  <Association Name="FK_Users_Roles">
+    <End Type="CrmDbTestModel.Roles" Role="Roles" Multiplicity="0..1" />
+    <End Type="CrmDbTestModel.Users" Role="Users" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Roles">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Users">
+        <PropertyRef Name="RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Users_Roles1">
+    <End Type="CrmDbTestModel.Roles" Role="Roles" Multiplicity="0..1" />
+    <End Type="CrmDbTestModel.Users" Role="Users" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Roles">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Users">
+        <PropertyRef Name="RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TaskUser_Users">
+    <End Type="CrmDbTestModel.Users" Role="Users" Multiplicity="0..1" />
+    <End Type="CrmDbTestModel.TaskUser" Role="TaskUser" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TaskUser">
+        <PropertyRef Name="userId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserRole_Users">
+    <End Type="CrmDbTestModel.Users" Role="Users" Multiplicity="0..1" />
+    <End Type="CrmDbTestModel.UserRole" Role="UserRole" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="UserRole">
+        <PropertyRef Name="userId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

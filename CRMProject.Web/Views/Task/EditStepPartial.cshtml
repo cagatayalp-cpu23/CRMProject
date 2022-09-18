@@ -1,0 +1,29 @@
+﻿@model CRMProject.ViewModels.Admin.StepViewModel
+
+@using (Html.BeginCollectionItem("Edit.Step"))
+{
+    <div class="step-row" id="@("Step_" + Model.Id)">
+        <div class="form-group">
+            @Html.HiddenFor(x => x.Id)
+            @Html.HiddenFor(x => x.taskId)
+            @Html.LabelFor(x => x.StepDetail)
+            @Html.TextBoxFor(x => x.StepDetail, new { @class = "form-control" })
+
+        </div>
+        <a data-modal-form="true"
+           data-modal-size="modal-lg"
+           data-modal-delete="#Step_@Model.Id"
+           data-modal-highlight="#Step_@Model.Id"
+           data-modal-title="Silmek istediğinizden emin misiniz?"
+           data-hook-beforeunload="true"
+           data-modal-trigger-onsuccess="true"
+           class="btn btn-block btn-success btn-sm"
+           href="@Url.Action("StepDelete", "Task", new { id = Model.Id })">
+            <i class="fa fa-times fa-fw text-danger"></i>  Sil
+        </a>
+        <a class="adimsil2 btn btn-success" data-id="@Model.Id@*"onclick=" $(this).closest('.step-row').remove()*@">Sil</a>
+    </div>
+}
+
+
+

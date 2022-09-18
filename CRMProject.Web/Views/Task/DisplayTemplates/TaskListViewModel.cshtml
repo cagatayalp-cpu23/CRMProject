@@ -1,0 +1,196 @@
+﻿@{
+    int k = 0;
+    int l = 0;
+    var uniqueId = Guid.NewGuid().ToString("N");
+    var uniqueId2 = Guid.NewGuid().ToString("N");
+}
+@using System.IdentityModel.Metadata
+@model CRMProject.ViewModels.Admin.TaskListViewModel
+@{
+    var searchQuery = ViewBag.Search ?? string.Empty;
+    
+}
+@*@{*@
+@*//bool? userNameCheck = ViewBag.UserNameCheck;*@
+@*}*@
+@*@if ((!userNameCheck.GetValueOrDefault() && string.IsNullOrWhiteSpace(Model.UserName) || (userNameCheck.GetValueOrDefault() && Model.UserName == ViewBag.username)))*@
+
+
+
+@*@if (Model.Users.Any(a => a.Name == ViewBag.username))
+    {
+
+    }*@
+
+<tr id="@("task_" + Model.Id)">
+
+    <td>
+        <div id="accordion_@Model.Id">
+            <div class="card">
+                <div class="card-header" id="headingOne_@Model.Id">
+                    <h5 class="mb-0">
+                        <button class="btn btn-sm" data-toggle="collapse" data-target="#collapseOne_@Model.Id" aria-expanded="false" aria-controls="collapseOne_@Model.Id">
+                            @Model.ProblemName
+                        </button>
+                    </h5>
+                </div>
+
+                <div id="collapseOne_@Model.Id" class="collapse" aria-labelledby="headingOne_@Model.Id" data-parent="#accordion_@Model.Id">
+                    <div class="card-body">
+
+                        @foreach (var item in Model.Step)
+                        {
+
+
+                            <input data-id="@item.Id" type="checkbox" class="ischecked" checked="@item.IsDone">
+
+                            <p>@item.StepDetail</p>
+
+
+                        }
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </td>
+    <td>@Model.RoleName</td>
+    @if (ViewBag.asd != "asd")
+    {
+
+
+
+        <td>@(string.Join(", ",Model.Users.SelectMany(x=>x.Name)))</td>
+
+    }
+
+    @if (@*Model.UserName == null*@ @*||*@ (ViewBag.asd == "asd" && ("IT" == ViewBag.role || ViewBag.role == "Manager")))
+{
+
+<td>
+
+    <a class="btn btn-default btn-sm deletes "
+       id="@uniqueId"
+       data-modal-form="true"
+       data-modal-size="modal-lg"
+       data-modal-append="tbody#taskList"
+       data-modal-delete="#task_@Model.Id"
+       data-modal-title="Kime eklenecek ?"
+       data-hook-beforeunload="true"
+       data-modal-trigger-onsuccess="true"
+       href="@Url.Action("KimeEklenecek", "Task", routeValues: new { id = Model.Id })">
+        <i class="fa fa-plus k"></i>Ekle
+    </a>
+</td>
+}
+    @if (ViewBag.asd != "asd")
+    {
+<td style="width: 50px">
+    <a data-modal-form="true"
+       data-modal-size="modal-lg"
+       data-modal-update="#task_@Model.Id"
+       data-modal-highlight="#task_@Model.Id"
+       data-modal-title="Task Düzenle"
+       data-hook-beforeunload="true"
+       class="btn btn-block btn-success btn-sm"
+       href="@Url.Action("Edit", "Task", new { taskId = Model.Id })">
+        <i class="fa fa-edit fa-fw text-success"></i> Task Düzenle
+    </a>
+
+</td>
+    }
+    @if (ViewBag.asd != "asd")
+    {
+        <td>
+            @*<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                Sil
+            </button>*@
+            <a data-modal-form="true"
+               id="@uniqueId2"
+               data-modal-size="modal-lg"
+               data-modal-delete="#task_@Model.Id"
+               data-modal-highlight="#task_@Model.Id"
+               data-modal-title="Task Sil"
+               data-hook-beforeunload="true"
+               data-modal-trigger-onsuccess="true"
+               class="btn btn-block btn-success btn-sm"
+               href="@Url.Action("Delete", "Task", new { taskId = Model.Id })">
+                <i class="fa fa-times fa-fw text-danger"></i> Task sil
+            </a>
+            <!-- Modal -->
+            @*<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Emin misiniz?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>*@
+            @*<a*@ @*href="@Url.Action("Delete","Task",new{taskId=Model.Id})"*@@*Kaydet </a>*@@*<button type="button" class="btn btn-primary">Save changes</button>*@
+            <!--</div>
+            </div>
+            </div>
+            </div>-->
+
+        </td>
+    }
+    
+    @if (ViewBag.asd != "asd")
+    {
+<td class="statusButtonTd">
+    @if (Model.IsSelected == true)
+    {
+
+        <a class="btn btn-success btnsuccess" data-id="@Model.Id" data-status="true" onclick="changeStatus(this)">YAPILDI</a>
+        k++;
+        l++;
+    }
+    else
+    {
+        <a class="btn btn-danger btnsuccess" data-id="@Model.Id" data-status="false" onclick="changeStatus(this)">YAPILMADI</a>
+        l++;
+    }
+</td>
+    }
+    
+    <td>
+        @(-(DateTime.Now.Date - Model.Deadline.GetValueOrDefault().Date))
+    </td>
+    <td style="empty-cells:hide ">                   </td>
+    <td>@Model.AtayaninAdi </td>
+    <td>@Model.GirenKullaniciAdi </td>
+
+
+    @*<td style="width:70px">
+            <a href="javascript:void(0);"
+               data-toggle="confirmation"
+               title="Emin Misiniz?"
+               data-btn-ok-label="Evet"
+               data-btn-cancel-label="Hayır"
+               data-placement="top"
+               data-task-id="@Model.Id"
+               data-on-confirm="deleteTask"
+               class="btn btn-block btn-danger btn-sm">
+                <i class="fa fa-trash fa-fw text-danger"></i> Task Sil
+            </a>
+        </td>*@
+</tr>
+@{
+    //ViewBag.yuzde = k / l;
+}
+@*<a class="adimsil btn btn-success" data-id="@Model.Id" onclick="$(this).closest('.step-row').remove()">Sil</a>*@
+@*<script>
+        $('#@uniqueId').on('onSuccess', function () {
+            calculatePercentage();
+        });$('#@uniqueId2').on('onSuccess', function () {
+            calculatePercentage();
+        });
+    </script>*@

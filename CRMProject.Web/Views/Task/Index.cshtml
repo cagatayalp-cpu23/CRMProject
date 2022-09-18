@@ -1,0 +1,127 @@
+﻿@using CRMProject.ViewModels.Admin
+@using Newtonsoft.Json
+@model CRMProject.ViewModels.Admin.TaskSearchViewModel
+@{
+    var searchQuery = ViewBag.Search ?? string.Empty;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var chartData = (List<ProblemCountViewModel>)ViewBag.ChartData;
+}
+<input type="hidden" value="@JsonConvert.SerializeObject(chartData)" id="chartDataJson" />
+<div class="row" style="background-color: aqua">
+    <div class="col-xs-12" style="background-color: aqua">
+        <div class="box box-solid " style="background-color: aqua">
+            <div class="box-header" style="background-color: aqua">
+                <h3 class="box-title">@ViewBag.Title</h3>
+            </div>
+            <div class="box-body">
+                @using (Html.BeginForm("TaskForm", "Task", null, FormMethod.Post, new { role = "form", id = "taskSearchSubmit", data_ajax_form = "true", data_target_container = "#taskListContainer" }))
+                {
+                    <div class="row">
+
+
+
+                        <div class="form-group form-group-sm col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                            @Html.TextBoxFor(m => m.Name, null, new { @class = "form-control", placeholder = "Problem Ara", value = searchQuery })
+                        </div>
+                        <div class="form-group form-group-sm col-xs-12 col-sm-4 col-sm-push-3 col-md-4 col-md-push-3">
+                            <label>Sırala</label>
+                            @Html.EnumDropDownListFor(m => m.SortList, "Seçiniz", new { @class = "form-control" })
+                            <div class="input-group">
+                                <button type='submit' class="btn btn-sm btn-default btn-block"><i class="fa fa-search"></i></button>
+                            </div>
+                        </div>
+                    </div>
+
+                }
+                <div>
+                    <div id="taskListContainer"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="box box-danger">
+    <div class="box-header with-border">
+        <h3 class="box-title">Donut Chart</h3>
+
+        <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                <i class="fa fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+        </div>
+    </div>
+    <div class="box-body">
+        <canvas id="pieChart" style="height:250px"></canvas>
+    </div>
+    <!-- /.box-body -->
+</div>
+<!-- /.box -->
+
+
+
+
+
+
+<script>
+    $(document).ready(function() {
+        $("#taskListContainer").on('click',
+            '.ischecked',
+            function() {
+                var id = $(this).data("id");
+                $.ajax({
+                    url: '/Task/check/' + id,
+                    type: 'POST',
+                    success: function(data) {
+
+                    },
+                    error: function() { alert('HATA'); }
+                });
+
+            });
+        var pieChartCanvas = $('#pieChart').get(0).getContext('2d');
+        var pieChart = new Chart(pieChartCanvas);
+        var chartData = JSON.parse($('#chartDataJson').val());
+
+        var PieData = $.map(chartData,
+            function (val, i) {
+                return { label: val.Name, value: val.Count };
+            });
+        console.log(PieData);
+
+        var pieOptions = {
+            //Boolean - Whether we should show a stroke on each segment
+            segmentShowStroke: true,
+            //String - The colour of each segment stroke
+            segmentStrokeColor: '#fff',
+            //Number - The width of each segment stroke
+            segmentStrokeWidth: 2,
+            //Number - The percentage of the chart that we cut out of the middle
+            percentageInnerCutout: 50, // This is 0 for Pie charts
+            //Number - Amount of animation steps
+            animationSteps: 100,
+            //String - Animation easing effect
+            animationEasing: 'easeOutBounce',
+            //Boolean - Whether we animate the rotation of the Doughnut
+            animateRotate: true,
+            //Boolean - Whether we animate scaling the Doughnut from the centre
+            animateScale: false,
+            //Boolean - whether to make the chart responsive to window resizing
+            responsive: true,
+            // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
+            maintainAspectRatio: true,
+            //String - A legend template
+            legendTemplate: '<ul class="<%=name.toLowerCase()%>-legend"><% for (var i=0; i<segments.length; i++){%><li><span style="background-color:<%=segments[i].fillColor%>"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>'
+        }
+        //Create pie or douhnut chart
+        // You can switch between pie and douhnut using the method below.
+        pieChart.Doughnut(PieData, pieOptions);
+    });
+</script>
+
+<script>
+    
+</script>

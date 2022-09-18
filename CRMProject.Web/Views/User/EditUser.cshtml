@@ -1,0 +1,35 @@
+﻿@model CRMProject.ViewModels.Admin.UserEditViewModel
+@using (Html.BeginForm("EditUser", "User", FormMethod.Post))
+{
+<div class="row">
+    @Html.HiddenFor(x => x.Id)
+
+
+    @Html.DisplayNameFor(x => x.Name)
+    @Html.TextBoxFor(x => x.Name)
+
+    @Html.DisplayNameFor(x => x.OldPassword)
+    @Html.TextBoxFor(x => x.OldPassword, new { type = "password" })
+
+
+    @Html.DisplayNameFor(x => x.Password)
+    @Html.TextBoxFor(x => x.Password, new { type = "password" })
+
+
+    @Html.DisplayNameFor(x => x.Roles)
+    @for (int i = 0; i < Model.Roles.Count(); i++)
+    {
+    <div class="col-md-3">
+        @Html.HiddenFor(m => Model.Roles[i].Id)
+        @Html.HiddenFor(m => Model.Roles[i].Name)
+        <div class="form-group">
+            @Html.Label(Model.Roles[i].Name, htmlAttributes: new { @class = "control-label-col-md-2" })
+            @Html.CheckBoxFor(m => Model.Roles[i].IsSelected)
+        </div>
+
+    </div>
+    }
+    <button type="submit" class="btn btn-default  size-18">Kaydet</button>
+</div>
+   
+}

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="8a78f00830ed435faa421e8abcaf9394" Name="Diagram1" ZoomLevel="71">
+        <EntityTypeShape EntityType="CrmDbTestModel.Personels" Width="1.5" PointX="3.75" PointY="1.125" />
+        <EntityTypeShape EntityType="CrmDbTestModel.ProblemSet" Width="1.5" PointX="3.75" PointY="7.5" />
+        <EntityTypeShape EntityType="CrmDbTestModel.Step" Width="1.5" PointX="8.25" PointY="7" />
+        <EntityTypeShape EntityType="CrmDbTestModel.sysdiagrams" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="CrmDbTestModel.TaskSet" Width="1.5" PointX="6" PointY="3.5" />
+        <EntityTypeShape EntityType="CrmDbTestModel.TaskUser" Width="1.5" PointX="8.25" PointY="4.125" />
+        <AssociationConnector Association="CrmDbTestModel.FK_TaskSet_Personels1" />
+        <AssociationConnector Association="CrmDbTestModel.FK_TaskSet_ProblemSet" />
+        <AssociationConnector Association="CrmDbTestModel.FK_Step_TaskSet1" />
+        <AssociationConnector Association="CrmDbTestModel.FK_TaskUser_TaskSet" />
+        <EntityTypeShape EntityType="CrmDbTestModel.UserRole" Width="1.5" PointX="8.25" PointY="1.25" />
+        <EntityTypeShape EntityType="CrmDbTestModel.Roles" Width="1.5" PointX="0.75" PointY="4" />
+        <AssociationConnector Association="CrmDbTestModel.FK_TaskSet_Roles" />
+        <AssociationConnector Association="CrmDbTestModel.FK_UserRole_Roles" />
+        <EntityTypeShape EntityType="CrmDbTestModel.Users" Width="1.5" PointX="3" PointY="3.75" />
+        <AssociationConnector Association="CrmDbTestModel.FK_Users_Roles" />
+        <AssociationConnector Association="CrmDbTestModel.FK_Users_Roles1" />
+        <AssociationConnector Association="CrmDbTestModel.FK_TaskUser_Users" />
+        <AssociationConnector Association="CrmDbTestModel.FK_UserRole_Users" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

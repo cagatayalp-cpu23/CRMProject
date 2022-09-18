@@ -1,0 +1,29 @@
+﻿@using Microsoft.Web.Mvc.Html
+@model CRMProject.ViewModels.Admin.UserViewModel
+@using (Html.BeginForm("TaskSelect", "Task", FormMethod.Post, new { }))
+{
+
+    @Html.HiddenFor(x => x.Id)
+   // @Html.CheckBoxFor(x => x.IsSelected, new { @class = "form-control" })
+    @Html.DisplayNameFor(x => x.Name)
+
+    @Html.DropDownListFor(x => x.Name, new SelectList(ViewBag.users, "Name", "Name"), new { @class = "form-control", multiple = "true" })
+
+
+    //Html.RenderAction("IndexAsync", "User");
+
+
+
+    <button type="submit" class="btn btn-primary pull-right">
+        <span class="fa fa-check"></span>&nbsp;&nbsp;Kaydet
+    </button>
+    <button class="btn btn-danger pull-right" type="button" data-dismiss="modal"><span class="fa fa-times"></span>&nbsp;&nbsp;İptal</button>
+}
+
+
+
+
+
+
+
+

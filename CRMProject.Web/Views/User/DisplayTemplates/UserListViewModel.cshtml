@@ -1,0 +1,44 @@
+﻿@model CRMProject.ViewModels.Admin.UserListViewModel
+
+<tr id="task_@Model.Id">
+    <td class="bg-aqua-active">@Model.Name</td>
+    <td class="bg-aqua-active" style="">@Model.Password</td>
+    <td class="bg-aqua-active">
+        @string.Join(",", Model.Roles.SelectMany(x => x.Name))
+    </td>
+
+    <td>
+        @*<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                Sil
+            </button>*@
+        <a data-modal-form="true"
+           data-modal-size="modal-lg"
+           data-modal-delete="#task_@Model.Id"
+           data-modal-highlight="#task_@Model.Id"
+           data-modal-title="Task Sil"
+           data-hook-beforeunload="true"
+           data-modal-trigger-onsuccess="true"
+           class="btn btn-block btn-success btn-sm"
+           href="@Url.Action("DeleteUser", "User",new {id=Model.Id})">
+            <i class="fa fa-times fa-fw text-danger"></i> Kullanıcı sil
+        </a>
+
+
+
+    </td>
+    <td style="width: 50px">
+        <a data-modal-form="true"
+           data-modal-size="modal-lg"
+           data-modal-update="#task_@Model.Id"
+           data-modal-highlight="#task_@Model.Id"
+           data-modal-title="Kullanıcı Düzenle"
+           data-hook-beforeunload="true"
+           class="btn btn-block btn-success btn-sm"
+           href="@Url.Action("EditUser", "User", new { id = Model.Id })">
+            <i class="fa fa-edit fa-fw text-success"></i> Kullanıcı Düzenle
+        </a>
+
+    </td>
+</tr>
+
+

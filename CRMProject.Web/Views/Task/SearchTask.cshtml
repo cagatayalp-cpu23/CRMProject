@@ -1,0 +1,10 @@
+﻿@using CRMProject.ViewModels.Admin
+@model IPagedList<CRMProject.ViewModels.Admin.TaskListViewModel>
+@{
+    var searchModel = (TaskSearchViewModel)ViewBag.SearchModel;
+}
+<div class="row row-cols-xl-4 ">
+    @Html.DisplayFor(m => m)
+</div>
+
+

@@ -1,0 +1,42 @@
+﻿@model IPagedList<CRMProject.ViewModels.Admin.UserListViewModel>
+@{
+    var searchmodel = ViewBag.searchmodel;
+    // var page = ViewBag.page;
+   // Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+    <table  class="table table-bordered">
+        <thead>
+            <tr>
+                <td>Username</td>
+                <td>Password</td>
+                <td>Role</td>
+            </tr>
+        </thead>
+
+        <tbody id="userList">
+        @Html.DisplayFor(x => x);
+
+        </tbody>
+        <td>
+
+            <a class="btn btn-default btn-sm deletes "
+               id=""
+               data-modal-form="true"
+               data-modal-size="modal-lg"
+               data-modal-append="tbody#userList"
+               data-modal-title="Kime eklenecek ?"
+               data-hook-beforeunload="true"
+               data-modal-trigger-onsuccess="true"
+               href="@Url.Action("AddUser", "User", routeValues: new { })">
+                <i class="fa fa-plus k"></i>Ekle
+            </a>
+        </td>
+    </table>
+
+
+@Html.Pager(Model.PageSize, Model.PageNumber, Model.TotalItemCount, new AjaxOptions { UpdateTargetId = "userListContainer" }).Options(o => o
+    .Action("UserForm")
+    .DisplayTemplate("BootstrapPagination")
+    .MaxNrOfPages(6)
+    .AlwaysAddFirstPageNumber().RouteValues(searchmodel))

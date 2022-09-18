@@ -1,0 +1,28 @@
+﻿@using CRMProject.ViewModels.Admin
+@model IEnumerable<ProblemViewModel>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <td>Ad</td>
+        </tr>
+    </thead>
+    <tbody id="problemform">
+        @Html.DisplayFor(m => m);
+
+    </tbody>
+</table>
+<a class="btn btn-default btn-sm"
+   data-modal-form="true"
+   data-modal-size="modal-lg"
+   data-modal-append="tbody#problemform"
+   data-modal-title="Problem ekle"
+   data-hook-beforeunload="true"
+   href="@Url.Action("Yeni", "Problem", routeValues: new {Area =string.Empty})">
+    <i class="fa fa-plus"></i>Problem Ekle
+</a>
+
+

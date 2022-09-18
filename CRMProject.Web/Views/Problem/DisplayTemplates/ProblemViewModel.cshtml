@@ -1,0 +1,17 @@
+﻿@model CRMProject.ViewModels.Admin.ProblemViewModel
+<tr id="@("problem_"+Model.Id)">
+    <td>@Model.Name</td>
+    <td>
+
+        <a data-modal-form="true"
+           data-modal-size="modal-lg"
+           data-modal-delete="#problem_@Model.Id"
+           data-modal-highlight="#problem_@Model.Id"
+           data-modal-title="Problem Sil"
+           data-hook-beforeunload="true"
+           class="btn btn-block btn-success btn-sm"
+           href="@Url.Action("Delete", "Problem", new { problemId = Model.Id })">
+            <i class="fa fa-times fa-fw text-danger"></i> Problem sil
+        </a>
+    </td>
+</tr>
